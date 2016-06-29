@@ -22,13 +22,21 @@ class Minitest::Compare
              /Finished in [\d.]+s, [\d.]+ runs\/s, [\d.]+ assertions\/s/,
             ]
 
+  attr_accessor :option
+  attr_accessor :times
+  attr_accessor :skipped
+
   def self.run args=ARGV
     new.run args
   end
 
-  def run args
-    option = { }
+  def initialize
+    self.option = {}
+    self.times = Hash.new { |h,k| h[k] = [] }
+    self.skipped = 0
+  end
 
+  def process_options args
     OptionParser.new do |opts|
       opts.on "-h", "--help", "Display this help." do
         puts opts
@@ -51,9 +59,10 @@ class Minitest::Compare
       end
     end
 
-    times = Hash.new { |h,k| h[k] = [] }
+    option
+  end
 
-    skipped = 0
+  def process_paths args
     args.each do |path|
       File.foreach(path) do |line|
         begin
@@ -65,7 +74,7 @@ class Minitest::Compare
           when *EXCLUDE then
             # do nothing
           else
-            skipped += 1
+            self.skipped += 1
             # warn "Unparsed: #{line.chomp}"
           end
         rescue Exception => e
@@ -75,7 +84,9 @@ class Minitest::Compare
         end
       end
     end
+  end
 
+  def report
     puts "Skipped lines   = %d" % skipped
     puts "Total records   = %d" % times.size
     puts "Skipped records = %d" % times.count { |_,v| v.size == 1 }
@@ -103,6 +114,12 @@ class Minitest::Compare
 
     puts
     puts "total change = %.2f" % total
+  end
+
+  def run args
+    process_options args
+    process_paths args
+    report
   rescue Interrupt, Errno::EPIPE
     # do nothing
   end
