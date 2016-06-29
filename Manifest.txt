@@ -1,0 +1,8 @@
+.autotest
+History.rdoc
+Manifest.txt
+README.rdoc
+Rakefile
+bin/minitest_compare
+lib/minitest/compare.rb
+test/minitest/test_compare.rb

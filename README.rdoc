@@ -1,0 +1,86 @@
+= minitest-compare
+
+home :: https://github.com/seattlerb/minitest-compare
+rdoc :: http://docs.seattlerb.org/minitest-compare
+
+== DESCRIPTION:
+
+This is a quick and dirty tool to compare test time deltas between two
+runs by comparing verbose run output.
+
+== FEATURES/PROBLEMS:
+
+* pro: stupid simple.
+* con: too stupid simple.
+
+== SYNOPSIS:
+
+  % rake TESTOPTS=-v > original_test_run.log
+  # make some changes to speed things up (or not)
+  % rake TESTOPTS=-v > new_test_run.log
+  % minitest_compare original_test_run.log new_test_run.log | head -50
+  Skipped lines   = 48
+  Total records   = 4301
+  Skipped records = 0
+
+  ordered from biggest slowdown to biggest speedup:
+
+   -0.11 =   0.00 -   0.11 ( 100.00%) TestRuby21Parser#test_method_call_trailing_comma
+   -0.02 =   0.00 -   0.02 ( 100.00%) TestRuby19Parser#test_defn_args_opt_splat_block
+   -0.02 =   0.00 -   0.02 ( 100.00%) TestRuby22Parser#test_splat_yield
+   -0.02 =   0.00 -   0.02 ( 100.00%) TestRuby23Parser#test_defn_args_mand_opt_mand__19_20_21_22_23
+   -0.02 =   0.00 -   0.02 ( 100.00%) TestRuby23Parser#test_splat_next
+   -0.01 =   0.00 -   0.01 ( 100.00%) TestRuby19Parser#test_defn_args_mand_opt_mand__19_20_21_22_23
+   -0.01 =   0.00 -   0.01 ( 100.00%) TestRubyLexer#test_yylex_hash_colon_quoted_symbol_22
+    0.01 =   0.01 -   0.00 (-100.00%) TestRuby21Parser#test_defn_splat_arg
+    0.01 =   0.01 -   0.00 (-100.00%) TestRuby23Parser#test_masgn_argscat
+    0.01 =   0.01 -   0.00 (-100.00%) TestRuby23Parser#test_not__19_20_21_22_23
+  ...blah blah blah...
+    0.38 =   0.38 -   0.00 (-100.00%) TestRuby22Parser#test_flip2
+    0.38 =   0.38 -   0.00 (-100.00%) TestRuby23Parser#test_flip3
+    0.42 =   0.42 -   0.00 (-100.00%) TestRuby19Parser#test_lambda_do_vs_brace
+    0.43 =   0.43 -   0.00 (-100.00%) TestRubyParser#test_parse
+    0.94 =   0.94 -   0.00 (-100.00%) TestRuby19Parser#test_i_really_hate_line_numbers
+    0.94 =   0.94 -   0.00 (-100.00%) TestRuby23Parser#test_i_really_hate_line_numbers
+    0.95 =   0.95 -   0.00 (-100.00%) TestRuby21Parser#test_i_really_hate_line_numbers
+    0.95 =   0.95 -   0.00 (-100.00%) TestRuby22Parser#test_i_really_hate_line_numbers
+    0.96 =   0.96 -   0.00 (-100.00%) TestRuby18Parser#test_i_really_hate_line_numbers
+    0.97 =   0.97 -   0.00 (-100.00%) TestRuby20Parser#test_i_really_hate_line_numbers
+
+  total change = 231.27
+
+
+
+== REQUIREMENTS:
+
+* minitest
+* tests
+
+== INSTALL:
+
+* sudo gem install minitest-compare
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) Ryan Davis, seattle.rb
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
